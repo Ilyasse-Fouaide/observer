@@ -11,15 +11,16 @@ function App() {
 
   const lastElement = React.useCallback((node: any) => {
     if (observer.current) observer.current.disconnect();
+    if (loading) return
     observer.current = new IntersectionObserver((entries) => {
       const isIntersecting = entries[0].isIntersecting;
-      if (isIntersecting && hasMore) {
+      if (isIntersecting) {
         console.log("visible");
         setPage(prev => prev + 1);
       }
     });
     if (node) observer.current.observe(node)
-  }, [hasMore]);
+  }, [hasMore, loading]);
 
   return (
     <div className="max-w-5xl mx-auto">
