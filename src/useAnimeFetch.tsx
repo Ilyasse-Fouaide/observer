@@ -8,6 +8,10 @@ export default function useAnimeFetch(filter: string, page: number) {
   const [hasMore, setHasMore] = React.useState(false);
 
   React.useEffect(() => {
+    setAnime([]);
+  }, [filter])
+
+  React.useEffect(() => {
     axios.get(`https://api.jikan.moe/v4/top/anime?filter=${filter}&page=${page}`)
       .then(({ data }) => {
         setAnime((prev) => [...prev, ...data.data]);
@@ -20,7 +24,7 @@ export default function useAnimeFetch(filter: string, page: number) {
         setError(true);
         setLoading(false);
       })
-  }, [page])
+  }, [page, filter])
 
   return { loading, error, anime, hasMore }
 }
