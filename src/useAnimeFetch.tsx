@@ -15,7 +15,7 @@ export default function useAnimeFetch(filter: string, page: number) {
     axios.get(`https://api.jikan.moe/v4/top/anime?filter=${filter}&page=${page}`)
       .then(({ data }) => {
         setAnime((prev) => [...prev, ...data.data]);
-        setHasMore(data.data.lenght > 0 ? false : true)
+        setHasMore(data.pagination.has_next_page);
         setLoading(false);
         setError(false);
       })
