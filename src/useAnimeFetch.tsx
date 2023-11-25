@@ -12,6 +12,7 @@ export default function useAnimeFetch(filter: string, page: number) {
   }, [filter])
 
   React.useEffect(() => {
+    setLoading(true)
     axios.get(`https://api.jikan.moe/v4/top/anime?filter=${filter}&page=${page}`)
       .then(({ data }) => {
         setAnime((prev) => [...prev, ...data.data]);
