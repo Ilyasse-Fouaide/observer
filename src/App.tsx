@@ -7,17 +7,34 @@ function App() {
 
   const { loading, error, anime, hasMore } = useAnimeFetch(filter, page);
 
-  console.log(anime)
+  const observer = React.useRef();
+
+  const lastElement = React.useCallback((node: any) => {
+    console.log(node)
+  }, []);
 
   return (
     <div className="max-w-5xl mx-auto">
       <div className="mt-20 grid grid-cols-4 gap-6">
-        {anime.map((item, key) =>
-          <div key={key}>
-            <div className="w-full aspect-[2/3]">
-              <img src={item.images.jpg.large_image_url} alt={item.title} className="w-full h-full object-cover" />
-            </div>
-          </div>
+        {anime.map((item, key) => {
+          if (anime.length === key + 1) {
+            return (
+              <div key={key} ref={lastElement}>
+                <div className="w-full aspect-[2/3]">
+                  <img src={item.images.jpg.large_image_url} alt={item.title} className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )
+          } else {
+            return (
+              <div key={key}>
+                <div className="w-full aspect-[2/3]">
+                  <img src={item.images.jpg.large_image_url} alt={item.title} className="w-full h-full object-cover" />
+                </div>
+              </div>
+            )
+          }
+        }
         )}
       </div>
       {loading && <p>Loading...</p>}
