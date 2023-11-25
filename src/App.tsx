@@ -6,6 +6,7 @@ function App() {
   const [page, setPage] = React.useState(1);
 
   const { loading, error, anime, hasMore } = useAnimeFetch(filter, page);
+  console.log(hasMore)
 
   const observer = React.useRef<any>();
 
@@ -14,8 +15,7 @@ function App() {
     if (loading) return
     observer.current = new IntersectionObserver((entries) => {
       const isIntersecting = entries[0].isIntersecting;
-      if (isIntersecting) {
-        console.log("visible");
+      if (isIntersecting && hasMore) {
         setPage(prev => prev + 1);
       }
     });
