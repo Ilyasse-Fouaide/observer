@@ -20,6 +20,8 @@ function App() {
           </div>
         )}
       </div>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error...</p>}
     </div>
   )
 }
