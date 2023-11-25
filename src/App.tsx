@@ -7,11 +7,18 @@ function App() {
 
   const { loading, error, anime, hasMore } = useAnimeFetch(filter, page);
 
-  const observer = React.useRef();
+  const observer = React.useRef<any>();
 
   const lastElement = React.useCallback((node: any) => {
-    console.log(node)
-  }, []);
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      const isIntersecting = entries[0].isIntersecting;
+      if (isIntersecting) {
+        console.log("visible");
+      }
+    });
+    if (node) observer.current.observe(node)
+  }, [hasMore]);
 
   return (
     <div className="max-w-5xl mx-auto">
